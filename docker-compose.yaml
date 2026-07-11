@@ -1,59 +1,84 @@
 services:
-   mongodb:
-     image: mongodb:v1
-     container_name: mongodb
-     volumes:
-       - mongodb:/data/db
-   catalogue:
-     image: catalogue:v1
-     container_name: catalogue
-     depends_on:
+  mongodb:
+    build:
+      context: ./mongodb
+      dockerfile: dockerfile
+    image: jrjaswanth/mongodb:v1
+    container_name: mongodb
+    volumes:
+      - mongodb:/data/db
+       
+  catalogue:
+    build:
+      context: ./catalogue
+      dockerfile: dockerfile
+    image: jrjaswanth/catalogue:v1
+    container_name: catalogue
+    depends_on:
       - mongodb
-   redis:
-    image: redis:7
+  redis:
+    image: jrjaswanth/redis:7
     container_name: redis
     volumes:
-    - redis:/data
-   mysql:
-    image: mysql:v1
+      - redis:/data
+  mysql:
+    build:
+      context: ./mysql
+      dockerfile: dockerfile
+    image: jrjaswanth/mysql:v1
     container_name: mysql
     volumes:
-    - mysql:/var/lib/mysql
-   rabbitmq:
-    image: rabbitmq:3
+      - mysql:/var/lib/mysql
+  rabbitmq:
+    image: jrjaswanth/rabbitmq:3
     container_name: rabbitmq
     volumes: # -v rabbitmq:/var/lib/rabbitmq
-    - rabbitmq:/var/lib/rabbitmq
+      - rabbitmq:/var/lib/rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123
-   user:
-    image: user:v1
+  user:
+    build:
+      context: ./user
+      dockerfile: dockerfile
+    image: jrjaswanth/user:v1
     container_name: user
     depends_on:
      - mongodb
      - redis
-   cart:
-    image: cart:v1
+  cart:
+    build:
+      context: ./cart
+      dockerfile: dockerfile
+    image: jrjaswanth/cart:v1
     container_name: cart
     depends_on:
      - redis
      - catalogue
-   shipping:
-    image: shipping:v1
+  shipping:
+    build:
+      context: ./shipping
+      dockerfile: dockerfile
+    image: jrjaswanth/shipping:v1
     container_name: shipping
     depends_on:
      - mysql
      - cart
-   payment:
-    image: payment:v1
+  payment:
+    build:
+      context: ./payment
+      dockerfile: dockerfile
+    image: jrjaswanth/payment:v1
     container_name: payment
     depends_on:
      - rabbitmq
      - cart
      - user
-   frontend:
-    image: frontend:v1
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    image: jrjaswanth/frontend:v1
     container_name: frontend
     ports: 
      - "80:80"
