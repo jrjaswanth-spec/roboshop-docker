@@ -3,7 +3,7 @@ services:
     build:
       context: ./mongodb
       dockerfile: dockerfile
-    image: jrjaswanth/mongodb:v1
+    image: jaswanthr7/mongodb:v1
     container_name: mongodb
     volumes:
       - mongodb:/data/db
@@ -12,7 +12,7 @@ services:
     build:
       context: ./catalogue
       dockerfile: dockerfile
-    image: jrjaswanth/catalogue:v1
+    image: jaswanthr7/catalogue:v1
     container_name: catalogue
     depends_on:
       - mongodb
@@ -25,7 +25,7 @@ services:
     build:
       context: ./mysql
       dockerfile: dockerfile
-    image: jrjaswanth/mysql:v1
+    image: jaswanthr7/mysql:v1
     container_name: mysql
     volumes:
       - mysql:/var/lib/mysql
@@ -41,7 +41,7 @@ services:
     build:
       context: ./user
       dockerfile: dockerfile
-    image: jrjaswanth/user:v1
+    image: jaswanthr7/user:v1
     container_name: user
     depends_on:
      - mongodb
@@ -50,7 +50,7 @@ services:
     build:
       context: ./cart
       dockerfile: dockerfile
-    image: jrjaswanth/cart:v1
+    image: jaswanthr7/cart:v1
     container_name: cart
     depends_on:
      - redis
@@ -59,7 +59,7 @@ services:
     build:
       context: ./shipping
       dockerfile: dockerfile
-    image: jrjaswanth/shipping:v1
+    image: jaswanthr7/shipping:v1
     container_name: shipping
     depends_on:
      - mysql
@@ -68,7 +68,7 @@ services:
     build:
       context: ./payment
       dockerfile: dockerfile
-    image: jrjaswanth/payment:v1
+    image: jaswanthr7/payment:v1
     container_name: payment
     depends_on:
      - rabbitmq
@@ -78,7 +78,7 @@ services:
     build:
       context: ./frontend
       dockerfile: dockerfile
-    image: jrjaswanth/frontend:v1
+    image: jaswanthr7/frontend:v1
     container_name: frontend
     ports: 
      - "80:80"
